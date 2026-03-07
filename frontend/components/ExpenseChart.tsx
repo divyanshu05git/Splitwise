@@ -1,23 +1,52 @@
 "use client"
 
 import ReactECharts from "echarts-for-react";
-import { EChartsOption } from "echarts";
+import { EChartsOption  } from "echarts";
 
 export default function ExpenseChart() {
 
     const options:EChartsOption={
-        title:{
-            text:"Expenses",
-            left:"center",
-            top:20,
-            textStyle:{
-                fontSize:16,
-                color:"#333"
-            }
-        },
+        // title:{
+        //     text:"Expenses",
+        //     left:"center",
+        //     top:20,
+        //     textStyle:{
+        //         fontSize:16,
+        //         color:"#333"
+        //     }
+        // },
 
         tooltip:{
             trigger:"axis",
+            formatter: 'Spent: ${c}',
+            axisPointer: {
+            type: 'line',
+            axis: 'y',
+            label: {
+                show: true,
+                formatter: (params: { value: number | string }) => {
+                return `$${params.value}`;
+                },
+                fontWeight: 500,
+                color: "#94a3b8",
+                fontSize: 12,
+                backgroundColor: "#f1f5f9",
+                padding: [4, 4, 0, 4],
+            },
+            lineStyle: {
+                type: 'dashed',
+                color: "#2563eb",
+                width: 1,
+            },
+            },
+        },
+
+        grid: {
+            top: "10%",
+            left: "0%",
+            right: "0%",
+            bottom: "3%",
+            containLabel: true
         },
 
         xAxis:{
@@ -50,6 +79,7 @@ export default function ExpenseChart() {
         },
 
         series:[{
+            name:"Expense",
             type:"bar",
             data:[200,300,150,400,250,350,300,450,500,400,350,600],
             barWidth:"60%",
@@ -66,7 +96,8 @@ export default function ExpenseChart() {
     }
 
     return (
-        <ReactECharts option={options} style={{height:"100%",width:"60%"}} /> 
+
+        <ReactECharts option={options} style={{height:"80%",width:"100%"}} /> 
     )
 
 }
